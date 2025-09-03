@@ -1,0 +1,3 @@
+-> depois de inicializar a class Server, teremos a classe ja pronta para I/O
+
+-> chamamos a funcao serverListen que ira esperar input dos clientes
