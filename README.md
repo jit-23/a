@@ -1,1 +1,0 @@
-# AFOSO MOTA LINDO
