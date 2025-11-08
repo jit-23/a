@@ -28,11 +28,11 @@ void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
 	
 	if(!target.empty() && target.find(',') != std::string::npos) // if i find ','
 	{
+		msg2send += "\r\n";
 		std::vector<std::string> all_targets  = split_target(target);
 		printf("targets: \n");
 		for (std::vector<std::string>::iterator it = all_targets.begin(); it  != all_targets.end() ; it++)
 			std::cout << "	"  << *it <<  std::endl;
-
 
 		for (str_iterator it = all_targets.begin(); it != all_targets.end(); it++)
 		{
