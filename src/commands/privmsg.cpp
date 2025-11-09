@@ -28,34 +28,31 @@ void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
 	
 	if(!target.empty() && target.find(',') != std::string::npos) // if i find ','
 	{
-		msg2send += "\r\n";
-		std::vector<std::string> all_targets  = split_target(target);
-		printf("targets: \n");
-		for (std::vector<std::string>::iterator it = all_targets.begin(); it  != all_targets.end() ; it++)
-			std::cout << "	"  << *it <<  std::endl;
-
-		for (str_iterator it = all_targets.begin(); it != all_targets.end(); it++)
+		std::map<std::string, bool> all_targets  = split_target(target); // the bool will be used to check if it exist or not, then after all the loop we send a error msg in case on being false the existence of it
+		for (std::map<std::string, bool>::iterator it = all_targets.begin(); it != all_targets.end(); it++)
 		{
 			for (client_iterator client_it = Clients.begin(); client_it !=  Clients.end(); client_it++)
 			{
-				if (*it == (*client_it)->get_nickname())
+				if (it->first == (*client_it)->get_nickname())
 				{
-					std::cout << "client finded: " << *it << std::endl;
-					std::cout << "msg2send: " << msg2send << std::endl;
-					send((*client_it)->get_fd(), msg2send.c_str(), msg2send.size(), 0);
+					it->second = true;
+					std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@localhost PRIVMSG " + it->first + " :" + msg2send + "\r\n";
+					send((*client_it)->get_fd(), privmsg.c_str(), privmsg.size(), 0);
+					
 				}
 			}			
 			for ( channel_iterator channel_it = Channels.begin(); channel_it != Channels.end(); channel_it++)
 			{
-				if (*it == channel_it->get_name())
+				if (it->first == channel_it->get_name())
 				{
-					std::cout << "channel finded: " << *it << std::endl;
 					int channel_index = distance(Channels.begin(), channel_it);
-					std::cout <<  "channel_index: " << channel_index << std::endl; 
 					broadcastToChannel(channel_index, msg2send.c_str(), Clients[index]);
 				}
 			}
 		}
+		//todo -> check again for the not found, they dont exist, send error msg to the sender
+//		for (std::map<std::string, bool>::iterator it = all_targets.begin(); it != all_targets.end(); it++)
+
 		return ;
 	}
 	//! FIM DA PARTE DO NANDO

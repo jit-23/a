@@ -52,7 +52,7 @@ class Server
 		void manageMessage(int i);
 		void parseCommand(std::string raw_msg, int index);
 		std::vector<std::string> split(const std::string &str);
-		std::vector<std::string> split_target(const std::string &str);
+		std::map<std::string, bool> split_target(const std::string &str);
 		void sendMessage();
 		void Client_registration();
 		void removeClient(int index);

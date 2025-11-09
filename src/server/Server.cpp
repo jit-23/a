@@ -413,14 +413,14 @@ void Server::sendTopicAndNames(size_t channel_index, int client_index)
 
 
 
-std::vector<std::string> Server::split_target(const std::string &str)
+std::map<std::string, bool> Server::split_target(const std::string &str)
 {
-    std::vector<std::string> tokens;
+    std::map<std::string, bool> tokens;
     std::stringstream ss(str);
     std::string target;
 
     while (std::getline(ss, target, ','))
-        tokens.push_back(target);
+	tokens.insert(std::make_pair(target, false));
 
     return tokens;
 }
