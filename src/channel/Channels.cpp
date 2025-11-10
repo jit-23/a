@@ -209,6 +209,9 @@ void Channel::handleOperatorMode(Client* client, bool give, std::vector<std::str
 	}
 }
 
+void Channel::set_finded(bool x){this->channel_finded = x;}
+bool Channel::get_finded()const{return this->channel_finded;}
+
 // Mode checking helper functions
 bool Channel::hasInviteOnlyMode() const
 {

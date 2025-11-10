@@ -25,7 +25,8 @@ void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
 	msg2send = message;
 
 	//! INICIO DA PARTE DO NANDO
-	
+	for (channel_iterator i = Channels.begin(); i != Channels.end(); i++)
+		i->set_finded(false);
 	if(!target.empty() && target.find(',') != std::string::npos) // if i find ','
 	{
 		std::map<std::string, bool> all_targets  = split_target(target); // the bool will be used to check if it exist or not, then after all the loop we send a error msg in case on being false the existence of it
@@ -35,24 +36,42 @@ void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
 			{
 				if (it->first == (*client_it)->get_nickname())
 				{
+					//std::cout << RED << it->first << RESET << std::endl; 
 					it->second = true;
 					std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@localhost PRIVMSG " + it->first + " :" + msg2send + "\r\n";
 					send((*client_it)->get_fd(), privmsg.c_str(), privmsg.size(), 0);
-					
 				}
 			}			
-			for ( channel_iterator channel_it = Channels.begin(); channel_it != Channels.end(); channel_it++)
+			for (channel_iterator channel_it = Channels.begin(); channel_it != Channels.end(); channel_it++)
 			{
 				if (it->first == channel_it->get_name())
 				{
+					it->second = true;
+					///std::cout << RED << it->first << RESET << std::endl; 
+					std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@localhost PRIVMSG " + it->first + " :" + msg2send + "\r\n";
+					channel_it->set_finded(true);
 					int channel_index = distance(Channels.begin(), channel_it);
-					broadcastToChannel(channel_index, msg2send.c_str(), Clients[index]);
+					broadcastToChannel(channel_index, privmsg.c_str(), Clients[index]);
 				}
 			}
 		}
 		//todo -> check again for the not found, they dont exist, send error msg to the sender
-//		for (std::map<std::string, bool>::iterator it = all_targets.begin(); it != all_targets.end(); it++)
-
+		for (std::map<std::string, bool>::iterator it = all_targets.begin(); it != all_targets.end(); it++)
+		{
+			if (it->second == false)
+			{
+				if(it->first.find('#', 1) != std::string::npos) // channel
+				{
+					std::string msg_error = server_name + std::string(" 403 ") + Clients[index]->get_nickname() + std::string(" ") + it->first + std::string(" :No such channel\r\n");
+					send(Clients[index]->get_fd(), msg_error.c_str(), msg_error.size(), 0);
+				}
+				else
+				{
+					std::string msg_error = server_name + std::string(" 401 ") + Clients[index]->get_nickname() + std::string(" ") + it->first + std::string(" :No such nick\r\n");
+					send(Clients[index]->get_fd(), msg_error.c_str(), msg_error.size(), 0);
+				}
+			}
+		}
 		return ;
 	}
 	//! FIM DA PARTE DO NANDO
@@ -100,7 +119,7 @@ void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
 			return ;
 			}
 			// Build the message and broadcast to channel (exclude sender)
-			std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@localhost PRIVMSG " + target + " :" + msg2send;
+			std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@localhost PRIVMSG " + target + " :" + msg2send + "\r\n";
 			broadcastToChannel(chan_idx, privmsg, Clients[sender_index]);
 		}
 		// Clean up

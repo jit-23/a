@@ -10,9 +10,10 @@ class Channel
 		std::string	name;
 		std::string	topic;
 		std::string	channel_key;
-		int		user_limit; // -1 means no limit
+		int		user_limit; 			 //? -1 means no limit
 		std::vector<std::string>	invited_users;
 		std::map<Client*, bool> channel_users;
+		bool channel_finded;				 //? var do nando
 
 	public:
 		Channel(std::string _name, Client* creator);
@@ -49,6 +50,9 @@ class Channel
 
 		bool checkInvite(std::string nickname);
 		void addInvite(std::string nickname);
+
+		bool get_finded()const;
+		void set_finded(bool x);
 
 		bool hasInviteOnlyMode() const;
 		bool hasTopicByOpsOnlyMode() const;
