@@ -38,7 +38,7 @@ void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
 				{
 					//std::cout << RED << it->first << RESET << std::endl; 
 					it->second = true;
-					std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@localhost PRIVMSG " + it->first + " :" + msg2send + "\r\n";
+					std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@" + server_name + " PRIVMSG " + it->first + " :" + msg2send + "\r\n";
 					send((*client_it)->get_fd(), privmsg.c_str(), privmsg.size(), 0);
 				}
 			}			
@@ -48,7 +48,7 @@ void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
 				{
 					it->second = true;
 					///std::cout << RED << it->first << RESET << std::endl; 
-					std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@localhost PRIVMSG " + it->first + " :" + msg2send + "\r\n";
+					std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@" + server_name + " PRIVMSG " + it->first + " :" + msg2send + "\r\n";
 					channel_it->set_finded(true);
 					int channel_index = distance(Channels.begin(), channel_it);
 					broadcastToChannel(channel_index, privmsg.c_str(), Clients[index]);
@@ -60,12 +60,12 @@ void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
 		{
 			if (it->second == false)
 			{
-				if(it->first.find('#', 1) != std::string::npos) // channel
+				if(it->first.find('#', 0) != std::string::npos) // channel
 				{
 					std::string msg_error = server_name + std::string(" 403 ") + Clients[index]->get_nickname() + std::string(" ") + it->first + std::string(" :No such channel\r\n");
 					send(Clients[index]->get_fd(), msg_error.c_str(), msg_error.size(), 0);
 				}
-				else
+				else // client
 				{
 					std::string msg_error = server_name + std::string(" 401 ") + Clients[index]->get_nickname() + std::string(" ") + it->first + std::string(" :No such nick\r\n");
 					send(Clients[index]->get_fd(), msg_error.c_str(), msg_error.size(), 0);
@@ -119,7 +119,7 @@ void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
 			return ;
 			}
 			// Build the message and broadcast to channel (exclude sender)
-			std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@localhost PRIVMSG " + target + " :" + msg2send + "\r\n";
+			std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@" + server_name + " PRIVMSG " + target + " :" + msg2send + "\r\n";
 			broadcastToChannel(chan_idx, privmsg, Clients[sender_index]);
 		}
 		// Clean up
@@ -145,7 +145,7 @@ void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
 				str_tokens.clear();
 				return ;
 			}
-			std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@localhost PRIVMSG " + target + " :" + msg2send + "\r\n";
+			std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@" + server_name + " PRIVMSG " + target + " :" + msg2send + "\r\n";
 			send(Clients[i]->get_fd(), privmsg.c_str(), privmsg.size(), 0);
 
 			msg2send.clear();
