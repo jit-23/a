@@ -47,14 +47,24 @@ void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
 				if (it->first == channel_it->get_name())
 				{
 					it->second = true;
-					///std::cout << RED << it->first << RESET << std::endl; 
-					std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@" + server_name + " PRIVMSG " + it->first + " :" + msg2send + "\r\n";
-					channel_it->set_finded(true);
-					int channel_index = distance(Channels.begin(), channel_it);
-					broadcastToChannel(channel_index, privmsg.c_str(), Clients[index]);
+					int chan_index = std::distance(Channels.begin(), channel_it);
+					if (!Channels[chan_index].hasClient(Clients[index]))
+					{
+						std::string msg_error = server_name + std::string(" 404 ") + Clients[index]->get_nickname() + std::string(" ") + it->first + std::string(" :Cannot send to channel\r\n");
+						send(Clients[index]->get_fd(), msg_error.c_str(), msg_error.size(), 0);
+					}
+					else
+					{
+						std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@" + server_name + " PRIVMSG " + it->first + " :" + msg2send + "\r\n";
+						int channel_index = distance(Channels.begin(), channel_it);
+						broadcastToChannel(channel_index, privmsg.c_str(), Clients[index]);
+					}
 				}
 			}
 		}
+		// todo
+		//! user -> cant send to itself
+		//!user -> need to be in channel to send msg
 		//todo -> check again for the not found, they dont exist, send error msg to the sender
 		for (std::map<std::string, bool>::iterator it = all_targets.begin(); it != all_targets.end(); it++)
 		{
@@ -72,6 +82,7 @@ void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
 				}
 			}
 		}
+
 		return ;
 	}
 	//! FIM DA PARTE DO NANDO
