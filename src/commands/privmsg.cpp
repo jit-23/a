@@ -25,8 +25,6 @@ void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
 	msg2send = message;
 
 	//! INICIO DA PARTE DO NANDO
-	for (channel_iterator i = Channels.begin(); i != Channels.end(); i++)
-		i->set_finded(false);
 	if(!target.empty() && target.find(',') != std::string::npos) // if i find ','
 	{
 		std::map<std::string, bool> all_targets  = split_target(target); // the bool will be used to check if it exist or not, then after all the loop we send a error msg in case on being false the existence of it
@@ -56,7 +54,7 @@ void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
 					else
 					{
 						std::string privmsg = ":" + Clients[sender_index]->get_nickname() + "!" + Clients[sender_index]->get_username() + "@" + server_name + " PRIVMSG " + it->first + " :" + msg2send + "\r\n";
-						int channel_index = distance(Channels.begin(), channel_it);
+						int channel_index = std::distance(Channels.begin(), channel_it);
 						broadcastToChannel(channel_index, privmsg.c_str(), Clients[index]);
 					}
 				}

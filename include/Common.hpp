@@ -7,6 +7,7 @@
 #include <sstream>
 #include <iostream>
 #include <cstdlib>
+#include <iterator>
 #include <cstring>
 #include <cstdio>
 #include <cctype>

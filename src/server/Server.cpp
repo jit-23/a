@@ -257,8 +257,10 @@ void Server::newClient()
 	{
 		delete client;
 		if (DEBUG || EVAL)
+		{
 			std::cout << RED << "[ERROR]" << RESET << " New client connection failed - FD: " << client_fd << std::endl;
 			std::cout << RED << "[ERROR]" << RESET << " Removing client immediately after connection." << std::endl;
+		}
 		return;
 	}
 	Clients.push_back(client);
