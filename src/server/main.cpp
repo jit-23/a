@@ -75,13 +75,15 @@ void handleSigs(int signum)
 
 	if (signum == SIGINT)
 	{
-		std::cout << LIGHT_GRAY << "[SERVER]" << YELLOW << "[INFO]" << RESET << " Server shutting down..." << std::endl;
+		if (DEBUG || EVAL)
+			std::cout << LIGHT_GRAY << "[SERVER]" << YELLOW << "[INFO]" << RESET << " Server shutting down..." << std::endl;
 		delete server;
 		exit(128 + signum);  // Unix convention: 128 + signal number (SIGINT = 2, so exits with 130)
 	}
 	else if (signum == SIGTSTP)
 	{
-		std::cout << LIGHT_GRAY << "[SERVER]" << YELLOW << "[INFO]" << RESET << " Server stoped!!" << std::endl;
+		if (DEBUG || EVAL)
+			std::cout << LIGHT_GRAY << "[SERVER]" << YELLOW << "[INFO]" << RESET << " Server stopped!!" << std::endl;
 		delete server;
 		exit(128 + signum);  // Unix convention: 128 + signal number (SIGTSTP = 20, so exits with 148)
 		

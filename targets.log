@@ -1,0 +1,683 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 4.4.1
+# Built for x86_64-unknown-linux-gnu
+# Copyright (C) 1988-2023 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Sat Nov 15 15:07:15 2025
+
+# Variables
+
+# environment
+GDK_BACKEND = x11
+# environment
+LC_ALL = C
+# environment
+SSH_AGENT_LAUNCHER = gnome-keyring
+# environment
+PULSE_SERVER = unix:/run/flatpak/pulse/native
+# makefile (from 'Makefile', line 37)
+CLR_CYN := \033[36m
+# environment
+SBX_CHROME_API_RQ = 1
+# makefile (from 'Makefile', line 11)
+SRC_DIR := src
+# environment
+VSCODE_CRASH_REPORTER_PROCESS_TYPE = extensionHost
+# environment
+VSCODE_CWD = /home/madao-da
+# environment
+LIBVIRT_DEFAULT_URI = qemu:///system
+# environment
+GDM_LANG = en
+# default
+MAKE_COMMAND := make
+# environment
+QT_ACCESSIBILITY = 1
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# makefile (from 'Makefile', line 27)
+Q := @
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# default
+.VARIABLES := 
+# environment
+PWD = /home/madao-da/42/Rank_05/a
+# environment
+ZYPAK_ZYGOTE_STRATEGY_SPAWN = 1
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+GI_TYPELIB_PATH = /app/lib/girepository-1.0
+# makefile (from 'Makefile', line 32)
+CLR_BOLD := \033[1m
+# environment
+XDG_DATA_DIRS = /app/share:/usr/share:/usr/share/runtime/share:/run/host/user-share:/run/host/share
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_CODE_CACHE_PATH = /home/madao-da/.var/app/com.visualstudio.code/config/Code/CachedData/7d842fb85a0275a4a8e4d7e040d2625abbf7f084
+# environment
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
+# environment
+LANG = C
+# environment
+XAUTHORITY = /run/flatpak/Xauthority
+ 
+# default
+.LOADED := 
+# default
+.INCLUDE_DIRS := /usr/include
+# environment
+ALSA_CONFIG_DIR = /usr/share/alsa
+# makefile
+MAKEFLAGS = pqrR
+# makefile (from 'Makefile', line 39)
+ERR_SYM := ✗
+# environment
+DBUS_STARTER_ADDRESS = unix:path=/run/user/102044/bus,guid=2105f972328f78ef2ce90e466918964b
+# makefile
+CURDIR := /home/madao-da/42/Rank_05/a
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# makefile (from 'Makefile', line 15)
+SRCS := src/channel/Channels.cpp src/client/Client.cpp src/commands/invite.cpp src/commands/join.cpp src/commands/kick.cpp src/commands/mode.cpp src/commands/nick.cpp src/commands/part.cpp src/commands/pass.cpp src/commands/privmsg.cpp src/commands/quit.cpp src/commands/topic.cpp src/commands/user.cpp src/modes/modes.cpp src/server/Server.cpp src/server/main.cpp
+# environment
+VSCODE_L10N_BUNDLE_LOCATION = 
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+ZYPAK_LIB = /app/bin/../lib
+# environment
+MFLAGS = -pqrR
+# environment
+SSH_AUTH_SOCK = /run/flatpak/ssh-auth
+# default
+.SHELLFLAGS := -c
+# environment
+XDG_CONFIG_DIRS = /app/etc/xdg:/etc/xdg
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# environment
+ALSA_CONFIG_PATH = /usr/share/alsa/alsa-flatpak.conf
+# environment
+XDG_SESSION_DESKTOP = ubuntu
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST := Makefile
+# environment
+FLATPAK_SANDBOX_DIR = /home/madao-da/.var/app/com.visualstudio.code/sandbox
+# automatic
+@F = $(notdir $@)
+# environment
+VSCODE_PID = 22
+# environment
+KRB5CCNAME = FILE:/tmp/krb5cc_102044_QrqTpN
+# environment
+XDG_SESSION_TYPE = x11
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# environment
+PYTHONUSERBASE = /var/data/python
+# environment
+AT_SPI_BUS_ADDRESS = unix:path=/run/flatpak/at-spi-bus
+# makefile (from 'Makefile', line 33)
+CLR_RED := \033[31m
+# environment
+XDG_DATA_HOME = /home/madao-da/.var/app/com.visualstudio.code/data
+# environment
+SESSION_MANAGER = local/c2r2s9.42porto.com:@/tmp/.ICE-unix/33877,unix/c2r2s9.42porto.com:/tmp/.ICE-unix/33877
+# automatic
+*F = $(notdir $*)
+# environment
+CHROME_DESKTOP = code.desktop
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/flatpak/bus
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# environment
+VSCODE_NLS_CONFIG = {"userLocale":"en-us","osLocale":"en","resolvedLanguage":"en","defaultMessagesFile":"/app/extra/vscode/resources/app/out/nls.messages.json","locale":"en-us","availableLanguages":{}}
+# environment
+__EGL_EXTERNAL_PLATFORM_CONFIG_DIRS = /etc/egl/egl_external_platform.d:/usr/lib/x86_64-linux-gnu/GL/egl/egl_external_platform.d:/usr/share/egl/egl_external_platform.d
+# default
+MAKE_HOST := x86_64-unknown-linux-gnu
+# makefile (from 'Makefile', line 16)
+OBJS := build/channel/Channels.o build/client/Client.o build/commands/invite.o build/commands/join.o build/commands/kick.o build/commands/mode.o build/commands/nick.o build/commands/part.o build/commands/pass.o build/commands/privmsg.o build/commands/quit.o build/commands/topic.o build/commands/user.o build/modes/modes.o build/server/Server.o build/server/main.o
+# environment
+GNOME_DESKTOP_SESSION_ID = this-is-deprecated
+# makefile
+SHELL = /bin/sh
+# default
+MAKECMDGOALS := all
+# environment
+XMODIFIERS = @im=ibus
+# environment
+LD_LIBRARY_PATH = /app/lib
+# environment
+SANDBOX_LD_LIBRARY_PATH = /app/lib
+# environment
+SHLVL = 0
+# makefile (from 'Makefile', line 35)
+CLR_YLW := \033[33m
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+PATH = /app/bin:/app/bin:/app/bin:/usr/bin:/home/madao-da/.var/app/com.visualstudio.code/data/node_modules/bin
+# environment
+XCURSOR_PATH = /run/host/user-share/icons:/run/host/share/icons
+# default
+MAKEFILES := 
+# environment
+LANGUAGE = en
+# automatic
+^F = $(notdir $^)
+# environment
+DBUS_SYSTEM_BUS_ADDRESS = unix:path=/run/dbus/system_bus_socket
+# makefile (from 'Makefile', line 36)
+CLR_MAG := \033[35m
+# environment
+APPLICATION_INSIGHTS_NO_STATSBEAT = true
+# environment
+XDG_CONFIG_HOME = /home/madao-da/.var/app/com.visualstudio.code/config
+# environment
+INVOCATION_ID = 2d2c61ec604a452d8a2a154e54236d20
+# makefile (from 'Makefile', line 41)
+TAG_CC := \033[36m[CC]\033[0m
+# environment
+DOCKER_HOST = unix:///run/user/102044/docker.sock
+# automatic
+?F = $(notdir $?)
+# makefile (from 'Makefile', line 5)
+NAME := ircserv
+# environment
+GTK_IM_MODULE = ibus
+# environment
+XDG_CURRENT_DESKTOP = Unity
+# automatic
++F = $(notdir $+)
+# environment
+XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
+# environment
+DESKTOP_SESSION = ubuntu
+# environment
+GST_PLUGIN_SYSTEM_PATH = /app/lib/gstreamer-1.0:/usr/lib/extensions/gstreamer-1.0:/usr/lib/x86_64-linux-gnu/codecs-extra/lib/gstreamer-1.0:/usr/lib/x86_64-linux-gnu/gstreamer-1.0
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+LOGNAME = madao-da
+# makefile (from 'Makefile', line 38)
+OK_SYM := ✓
+# makefile (from 'Makefile', line 43)
+TAG_CLEAN := \033[33m[CLEAN]\033[0m
+# environment
+container = flatpak
+# makefile (from 'Makefile', line 9)
+CPPFLAGS := -MMD -MP -I include
+# environment
+GIO_LAUNCHED_DESKTOP_FILE = /var/lib/flatpak/exports/share/applications/com.visualstudio.code.desktop
+# makefile (from 'Makefile', line 42)
+TAG_LD := \033[35m[LD]\033[0m
+# makefile
+.DEFAULT_GOAL := all
+# environment
+SYSTEMD_EXEC_PID = 33877
+# environment
+NPM_CONFIG_GLOBALCONFIG = /app/etc/npmrc
+# environment
+GTK_MODULES = gail:atk-bridge
+# environment
+USER = madao-da
+# environment
+DISPLAY = :99.0
+# default
+ 
+MAKE_VERSION := 4.4.1
+# 'override' directive
+.SHELLSTATUS := 0
+# environment
+MANAGERPID = 33235
+# environment
+DBUS_STARTER_BUS_TYPE = session
+# environment
+GIO_LAUNCHED_DESKTOP_FILE_PID = 35890
+# environment
+_ = /usr/bin/make
+# environment
+XDG_RUNTIME_DIR = /run/user/102044
+# environment
+GPG_AGENT_INFO = /run/user/102044/gnupg/S.gpg-agent:0:1
+# environment
+PULSE_CLIENTCONFIG = /run/flatpak/pulse/config
+# makefile (from 'Makefile', line 34)
+CLR_GRN := \033[32m
+# environment
+JOURNAL_STREAM = 8:192593
+# environment
+XDG_SESSION_CLASS = user
+# makefile (from 'Makefile', line 31)
+CLR_RESET := \033[0m
+# makefile (from 'Makefile', line 12)
+BUILD_DIR := build
+# environment
+HOME = /home/madao-da
+# environment
+QT_IM_MODULE = ibus
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+VSCODE_IPC_HOOK = /run/user/102044/vscode-66fbeb23-1.10-main.sock
+# environment
+FT_HOOK_PATHNAME = login-user.d
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
+# makefile (from 'Makefile', line 17)
+DEPS := build/channel/Channels.d build/client/Client.d build/commands/invite.d build/commands/join.d build/commands/kick.d build/commands/mode.d build/commands/nick.d build/commands/part.d build/commands/pass.d build/commands/privmsg.d build/commands/quit.d build/commands/topic.d build/commands/user.d build/modes/modes.d build/server/Server.d build/server/main.d
+# default
+SUFFIXES := 
+# environment
+XDG_CACHE_HOME = /home/madao-da/.var/app/com.visualstudio.code/cache
+# environment
+VSCODE_CLI = 1
+# environment
+FT_HOOK_NAME = login-user
+# environment
+ELECTRON_NO_ATTACH_CONSOLE = 1
+# makefile (from 'Makefile', line 8)
+CXXFLAGS := -Wall -Werror -Wextra -std=c++98
+# environment
+XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/madao-da
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs notintermediate shell-export archives jobserver jobserver-fifo output-sync check-symlink load
+# makefile (from 'Makefile', line 7)
+CXX := c++
+# makefile (from 'Makefile', line 44)
+TAG_FCLEAN := \033[33m[FCLEAN]\033[0m
+# environment
+FLATPAK_ID = com.visualstudio.code
+# environment
+XDG_MENU_PREFIX = gnome-
+# environment
+VSCODE_ESM_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+ZYPAK_BIN = /app/bin
+# environment
+GDMSESSION = ubuntu
+# variable set hash-table stats:
+# Load=150/1024=15%, Rehash=0, Collisions=23/211=11%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# src (device 2048, inode 12707603): No files, no impossibilities so far.
+# . (device 2048, inode 12617420): 12 files, no impossibilities.
+# src/channel (device 2048, inode 185139): 3 files, no impossibilities so far.
+
+# 15 files, no impossibilities in 3 directories.
+
+# Implicit Rules
+
+build/%.o: src/%.cpp
+#  recipe to execute (from 'Makefile', line 59):
+	@mkdir -p $(@D)
+	@printf "$(TAG_CC) %s\n" "$<"
+	$(Q)$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+
+# 1 implicit rules, 0 (0.0%) terminal.
+# Files
+
+# Not a target:
+build/commands/nick.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+build/commands/topic.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+build/commands/join.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+build/client/Client.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+build/commands/kick.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+build/commands/nick.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+build/commands/kick.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+build/commands/mode.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+build/commands/quit.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# makefile (from 'Makefile', line 74)
+debug: CXXFLAGS += -g3 -O0
+debug: re
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+# variable set hash-table stats:
+# Load=1/32=3%, Rehash=0, Collisions=0/3=0%
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  File is secondary (prerequisite of .SECONDARY).
+#  Last modified 2025-11-15 15:06:56.185735328
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+build/commands/part.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+src/channel/Channels.cpp:
+#  Implicit rule search has been done.
+#  File is secondary (prerequisite of .SECONDARY).
+ 
+#  Last modified 2025-11-15 15:06:56.193735433
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+build/server/main.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 64):
+	@printf "$(TAG_CLEAN) removing object files in %s\n" "$(BUILD_DIR)/"
+	$(Q)rm -rf $(BUILD_DIR)
+
+# Not a target:
+build/commands/user.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+build/commands/join.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+build/modes/modes.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+build/channel/Channels.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+build/server/Server.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+build/commands/part.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+re: fclean all
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+build/commands/privmsg.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+build/commands/user.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+build/commands/invite.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+all: ircserv
+#  Phony target (prerequisite of .PHONY).
+#  Command line target.
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/9=0%
+
+fclean: clean
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 68):
+	@printf "$(TAG_FCLEAN) removing binary %s\n" "$(NAME)"
+	$(Q)rm -f $(NAME)
+
+# Not a target:
+build/commands/quit.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+build/commands/invite.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+build/modes/modes.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+build/client/Client.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+build/commands/pass.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+build/commands/topic.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+build/channel/Channels.o: src/channel/Channels.cpp
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'channel/Channels'
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := build/channel/Channels.o
+# automatic
+# * := channel/Channels
+# automatic
+# < := src/channel/Channels.cpp
+# automatic
+# + := src/channel/Channels.cpp
+# automatic
+# % := 
+# automatic
+# ^ := src/channel/Channels.cpp
+# automatic
+# ? := src/channel/Channels.cpp
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/21=5%
+#  recipe to execute (from 'Makefile', line 59):
+	@mkdir -p $(@D)
+	@printf "$(TAG_CC) %s\n" "$<"
+	$(Q)$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+
+# Not a target:
+build/server/Server.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+build/commands/mode.o:
+#  Implicit rule search has not been done.
+ 
+#  Modification time never checked.
+#  File has not been updated.
+
+# makefile (from 'Makefile', line 77)
+asan: CXXFLAGS += -g3 -O1 -fno-omit-frame-pointer -fsanitize=address
+asan: re
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+# variable set hash-table stats:
+# Load=1/32=3%, Rehash=0, Collisions=0/3=0%
+
+# Not a target:
+build/commands/privmsg.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+ircserv: build/channel/Channels.o build/client/Client.o build/commands/invite.o build/commands/join.o build/commands/kick.o build/commands/mode.o build/commands/nick.o build/commands/part.o build/commands/pass.o build/commands/privmsg.o build/commands/quit.o build/commands/topic.o build/commands/user.o build/modes/modes.o build/server/Server.o build/server/main.o
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/9=0%
+#  recipe to execute (from 'Makefile', line 53):
+	@printf "$(TAG_LD) Linking $(CLR_BOLD)%s$(CLR_RESET)\n" "$@"
+	$(Q)$(CXX) $(CXXFLAGS) $(OBJS) -o $@
+	@printf "$(CLR_GRN)$(OK_SYM) Built $(CLR_BOLD)%s$(CLR_RESET)\n" "$@"
+
+.PHONY: all clean fclean re debug asan
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+build/server/main.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+build/commands/pass.d:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# files hash-table stats:
+# Load=44/1024=4%, Rehash=0, Collisions=0/108=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 61 / storage = 988 B / avg = 16 B
+# current buf: size = 8162 B / used = 988 B / count = 61 / avg = 16 B
+
+# strcache performance: lookups = 109 / hit rate = 44%
+# hash-table stats:
+# Load=61/8192=1%, Rehash=0, Collisions=0/109=0%
+# Finished Make data base on Sat Nov 15 15:07:15 2025
+
+ 

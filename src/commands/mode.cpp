@@ -10,7 +10,8 @@ void Server::handleMode(std::vector<std::string> &tokens, int index)
 	}
 	if (tokens.size() < 2)
 	{
-		std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Not enough parameters" << std::endl;
+		if (DEBUG)
+			std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Not enough parameters" << std::endl;
 		return ;
 	}
 	std::string channel_name = tokens[1];
@@ -25,7 +26,8 @@ void Server::handleMode(std::vector<std::string> &tokens, int index)
 
 	if (!checkChannelExists(channel_name))
 	{
-		std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Channel " << channel_name << " does not exist" << std::endl;
+		if (DEBUG)
+			std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Channel " << channel_name << " does not exist" << std::endl;
 		// Send ERR_NOSUCHCHANNEL (403)
 		std::string msg_error = server_name + std::string(" 403 ") + Clients[index]->get_nickname() + std::string(" ") + channel_name + std::string(" :No such channel\r\n");
 		send(Clients[index]->get_fd(), msg_error.c_str(), msg_error.size(), 0);
@@ -113,7 +115,11 @@ void Server::handleMode(std::vector<std::string> &tokens, int index)
 						case 'k':
 							if (param_index >= tokens.size())
 							{
-								std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Channel key not provided for +k" << std::endl;
+								// CHANGE: send 461 instead of only logging
+								std::string err = ":" + server_name + " 461 " + Clients[index]->get_nickname() + " MODE :Not enough parameters\r\n";
+								send(Clients[index]->get_fd(), err.c_str(), err.size(), 0);
+								if (DEBUG)
+									std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Channel key not provided for +k" << std::endl;
 								return ;
 							}
 							Channels[i].handleKeyMode(tokens[param_index]);
@@ -126,7 +132,11 @@ void Server::handleMode(std::vector<std::string> &tokens, int index)
 						case 'l':
 							if (param_index >= tokens.size())
 							{
-								std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " User limit not provided for +l" << std::endl;
+								// CHANGE: send 461 instead of only logging
+								std::string err = ":" + server_name + " 461 " + Clients[index]->get_nickname() + " MODE :Not enough parameters\r\n";
+								send(Clients[index]->get_fd(), err.c_str(), err.size(), 0);
+								if (DEBUG)
+									std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " User limit not provided for +l" << std::endl;
 								return ;
 							}
 							Channels[i].handleLimitMode(std::atoi(tokens[param_index].c_str()));
@@ -137,12 +147,21 @@ void Server::handleMode(std::vector<std::string> &tokens, int index)
 						case 'o':
 							if (param_index >= tokens.size())
 							{
-								std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Username not provided for +o" << std::endl;
+								// CHANGE: send 461 instead of only logging
+								std::string err = ":" + server_name + " 461 " + Clients[index]->get_nickname() + " MODE :Not enough parameters\r\n";
+								send(Clients[index]->get_fd(), err.c_str(), err.size(), 0);
+								if (DEBUG)
+									std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Username not provided for +o" << std::endl;
 								return ;
 							}
 							Channels[i].handleOperatorMode(Clients[index], true, tokens); result_message += "+o " + tokens[param_index] + " ";
 							broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " +o " + tokens[param_index] + "\r\n");
 							param_index++;
+							break;
+						default:
+							// Unknown mode character
+							if (DEBUG || EVAL)
+								std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Unknown mode character: " << c << std::endl;
 							break;
 					}
 				}
@@ -173,23 +192,33 @@ void Server::handleMode(std::vector<std::string> &tokens, int index)
 						case 'o':
 							if (param_index >= tokens.size())
 							{
-								std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Username not provided for -o" << std::endl;
+								// CHANGE: send 461 instead of only logging
+								std::string err = ":" + server_name + " 461 " + Clients[index]->get_nickname() + " MODE :Not enough parameters\r\n";
+								send(Clients[index]->get_fd(), err.c_str(), err.size(), 0);
+								if (DEBUG)
+									std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Username not provided for -o" << std::endl;
 								return ;
 							}
 							Channels[i].handleOperatorMode(Clients[index], false, tokens); result_message += "-o " + tokens[param_index] + " ";
 							broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " -o " + tokens[param_index] + "\r\n");
 							param_index++;
 							break;
+						default:
+							// Unknown mode character
+							if (DEBUG || EVAL)
+								std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Unknown mode character: " << c << std::endl;
+							break;
 					}
 				}
 			}
-
-			std::cout << GREEN << "[SUCCESS]" << PINK << "[MODE]" << RESET << " Channel modes for " << channel_name 
-					  << " changed: " << result_message << "(active modes: " << Channels[i].get_mode() << ")" << std::endl;
+			if (DEBUG || EVAL)
+				std::cout << GREEN << "[SUCCESS]" << PINK << "[MODE]" << RESET << " Channel modes for " << channel_name << " changed: " << result_message << "(active modes: " << Channels[i].get_mode() << ")" << std::endl;
 			return ;
 		}
 	}
-
-	std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Invalid channel mode" << std::endl;
+	if (DEBUG || EVAL)
+		std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Invalid channel mode" << std::endl;
+	std::string err = ":" + server_name + " 472 " + Clients[index]->get_nickname() + " * :is unknown mode char to me\r\n";
+	send(Clients[index]->get_fd(), err.c_str(), err.size(), 0);
 	return ;
 }

@@ -32,7 +32,8 @@ void Server::handlePass(std::vector<std::string> &str_vtr, int index)
 		removeClient(index);
 	return;
 	}
-	std::cout << GREEN <<  "[SUCCESS] " << RESET << "Correct Password" << std::endl;
+	if (DEBUG || EVAL)
+		std::cout << GREEN <<  "[SUCCESS] " << RESET << "Correct Password" << std::endl;
 	Clients[index]->set_bool_password_implemented(true);
 	return ;
 }

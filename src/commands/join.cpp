@@ -235,7 +235,7 @@ void Server::handleJoin(std::vector<std::string> &tokens, int index)
 		sendTopicAndNames(new_channel_index, index);
 	}
 
-	if (DEBUG)
+	if (DEBUG || EVAL)
 	{
 		std::cout << GREEN << "[SUCCESS]" << PINK << "[JOIN]" << RESET << " Client " << Clients[index]->get_nickname() << " joined channel " << channel_name << std::endl;
 	}

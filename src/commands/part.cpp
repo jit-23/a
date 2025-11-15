@@ -99,11 +99,11 @@ void Server::handlePart(std::vector<std::string> &tokens, int index)
 			if (Channels[i].get_channel_users().empty())
 			{
 				Channels.erase(Channels.begin() + i);
-				if (DEBUG)
+				if (DEBUG || EVAL)
 					std::cout << YELLOW << "[INFO]" << PINK << "[PART]" << RESET << " Channel " << channel_name << " removed (empty)" << std::endl;
 			}
 
-			if (DEBUG)
+			if (DEBUG || EVAL)
 			{
 				std::cout << GREEN << "[SUCCESS]" << PINK << "[PART]" << RESET << " Client " << Clients[index]->get_nickname() << " left channel " << channel_name;
 				if (!part_reason.empty())

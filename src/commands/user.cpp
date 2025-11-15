@@ -21,8 +21,9 @@ void Server::handleUser(std::vector<std::string> &tokens, int index)
 	if (username.length() > 10)
 	{
 		username = username.substr(0,10);
-//		Clients[index]->set_username(username.substr(0, 9));
-		std::cout << YELLOW << "[INFO]" << PINK << "[USER]" << RESET << " Username too long, truncated to " << Clients[index]->get_username() << std::endl;
+		Clients[index]->set_username(username);
+		if (DEBUG || EVAL)
+			std::cout << YELLOW << "[INFO]" << PINK << "[USER]" << RESET << " Username too long, silently truncated to " << Clients[index]->get_username() << std::endl;
 	}
 
 	for (size_t i = 0; i < username.size(); i++)
@@ -43,7 +44,8 @@ void Server::handleUser(std::vector<std::string> &tokens, int index)
 		return ;
 	}
 	Clients[index]->set_username(username);
-	std::cout << GREEN << "[SUCCESS]" << PINK << "[USER]" << RESET << " Username set to " << username << std::endl;
+	if (DEBUG || EVAL)
+		std::cout << GREEN << "[SUCCESS]" << PINK << "[USER]" << RESET << " Username set to " << username << std::endl;
 
 	if (tokens[4][0] == ':')
 		Clients[index]->set_realname(tokens[4].substr(1));

@@ -174,6 +174,11 @@ void Server::handleKick(std::vector<std::string> &tokens, int index)
 	// Remove target from channel
 	chan.removeClient(target_client);
 
+	if (DEBUG || EVAL)
+	{
+		std::cout << GREEN << "[SUCESS]" << PINK << "[KICK]" << RESET << " Client " << Clients[index]->get_nickname() << " was kicked from channel " << channel_name << std::endl;
+	}
+
 	// If channel becomes empty, delete it
 	if (chan.get_channel_users().empty())
 		Channels.erase(Channels.begin() + chan_index);

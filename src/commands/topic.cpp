@@ -74,7 +74,7 @@ void Server::handleTopic(std::vector<std::string> &tokens, int index)
 				std::string topic_msg = ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@" + server_name + " TOPIC " + channel_name + " :" + new_topic + "\r\n";
 				broadcastToChannel(i, topic_msg);
 
-				if (DEBUG)
+				if (DEBUG || EVAL)
 					std::cout << GREEN << "[SUCCESS]" << PINK << "[TOPIC]" << RESET << " Topic for channel " << channel_name << " set to: " << new_topic << std::endl;
 			}
 			return;

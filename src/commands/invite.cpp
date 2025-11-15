@@ -75,7 +75,7 @@ void Server::handleInvite(std::vector<std::string> &tokens, int index)
 			std::string invite_msg = std::string(":") + Clients[index]->get_nickname() + std::string("!") + Clients[index]->get_username() + std::string("@localhost INVITE ") + target_nickname + std::string(" :") + channel_name + std::string("\r\n");
 			send(Clients[target_index]->get_fd(), invite_msg.c_str(), invite_msg.size(), 0);
 
-			if (DEBUG)
+			if (DEBUG || EVAL)
 			{
 				std::cout << GREEN << "[SUCCESS]" << PINK << "[INVITE]" << RESET << " " << Clients[index]->get_nickname() 
 						  << " invited " << target_nickname << " to " << channel_name << std::endl;

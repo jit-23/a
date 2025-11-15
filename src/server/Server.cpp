@@ -6,7 +6,8 @@ Server::Server(int port_number, std::string passwrd) : port(port_number), passwo
 	server_fd = socket(AF_INET,SOCK_STREAM, 0);
 	if (server_fd == -1)
 	{
-		std::cout << RED << "[ERROR]" << RESET << " socket() failed: " << std::strerror(errno) << std::endl;
+		if (DEBUG || EVAL)
+			std::cout << RED << "[ERROR]" << RESET << " socket() failed: " << std::strerror(errno) << std::endl;
 		stop_server = true;
 		exit(EXIT_FAILURE);
 	}
@@ -27,21 +28,24 @@ Server::Server(int port_number, std::string passwrd) : port(port_number), passwo
 	server_name = std::string(":Ft_Irc");
 	if (fcntl(server_fd, F_SETFL, O_NONBLOCK) == -1)
 	{
-		std::cout << RED << "[ERROR]" << RESET << " fcntl() failed: " << std::strerror(errno) << std::endl;
+		if (DEBUG || EVAL)
+			std::cout << RED << "[ERROR]" << RESET << " fcntl() failed: " << std::strerror(errno) << std::endl;
 		stop_server = true;
 		return ;
 		//exit(EXIT_FAILURE);
 	}
 	if (bind(server_fd, (struct sockaddr*)&sock_addr, sizeof(struct sockaddr)) == -1)
 	{
-		std::cout << RED << "[ERROR]" << RESET << " bind() failed: " << std::strerror(errno) << std::endl;
+		if (DEBUG || EVAL)
+			std::cout << RED << "[ERROR]" << RESET << " bind() failed: " << std::strerror(errno) << std::endl;
 		stop_server = true;
 		return ;
 		//exit(EXIT_FAILURE);
 	}
 	if (listen(server_fd, SOMAXCONN) == -1)
 	{
-		std::cout << RED << "[ERROR]" << RESET << " listen() failed: " << std::strerror(errno) << std::endl;
+		if (DEBUG || EVAL)
+			std::cout << RED << "[ERROR]" << RESET << " listen() failed: " << std::strerror(errno) << std::endl;
 		stop_server = true;
 		return ;
 		//exit(EXIT_FAILURE);
@@ -62,7 +66,8 @@ Server::~Server()
 	}
 	Clients.clear();
 
-	std::cout << YELLOW << "[INFO]" << RESET << " All Clients disconnected and memory freed. Clients: " << Clients.size() << std::endl;
+	if (DEBUG || EVAL)
+		std::cout << YELLOW << "[INFO]" << RESET << " All Clients disconnected and memory freed. Clients: " << Clients.size() << std::endl;
 }
 
 void Server::serverLoop()
@@ -71,7 +76,8 @@ void Server::serverLoop()
 	{
 		if (poll(&pollFds[0], pollFds.size(), WAIT_FOR_EVENT) == -1)
 		{
-			std::cout << RED << "[ERROR]" << RESET << " poll() failed: " << std::strerror(errno) << std::endl;
+			if (DEBUG || EVAL)
+				std::cout << RED << "[ERROR]" << RESET << " poll() failed: " << std::strerror(errno) << std::endl;
 			return ;
 		}
 		for (size_t i = 0; i < pollFds.size(); i++)
@@ -117,13 +123,15 @@ void Server::manageMessage(int index)
 		{
 			return;
 		}
-		std::cout << RED << "[ERROR]" << RESET << " recv() failed for fd " << fd << ": " << std::strerror(errno) << std::endl;
+		if (DEBUG || EVAL)
+			std::cout << RED << "[ERROR]" << RESET << " recv() failed for fd " << fd << ": " << std::strerror(errno) << std::endl;
 		removeClient(static_cast<int>(index) - 1);
 		return;
 	}
 	else if (bytes_r == 0)
 	{
-		std::cout << YELLOW << "[INFO]" << RESET << " Client disconnected (recv==0)" << std::endl;
+		if (DEBUG || EVAL)
+			std::cout << YELLOW << "[INFO]" << RESET << " Client disconnected (recv==0)" << std::endl;
 		removeClient(static_cast<int>(index) - 1);
 		return;
 	}
@@ -134,7 +142,7 @@ void Server::manageMessage(int index)
 	const size_t RFC_MSG_LIMIT = 512;
 	if (clientBuffers[fd].size() > RFC_MSG_LIMIT)
 	{
-		if (DEBUG)
+		if (DEBUG || EVAL)
 			std::cout << YELLOW << "[WARN]" << RESET << " Message from fd=" << fd << " exceeded RFC limit (" << clientBuffers[fd].size() << " bytes), disconnecting" << std::endl;
 		// Close connection for protocol violation (message too long)
 		removeClient(static_cast<int>(index) - 1);
@@ -151,7 +159,8 @@ void Server::manageMessage(int index)
 		clientBuffers[fd].erase(0, pos + 1);
 		if (!command.empty())
 		{
-			std::cout << YELLOW << "[INFO]" << RESET << " Received command: " << command << std::endl;
+			if (DEBUG)
+				std::cout << YELLOW << "[INFO]" << RESET << " Received command: " << command << std::endl;
 			parseCommand(command, static_cast<int>(index) - 1);
 		}
 	}
@@ -168,7 +177,8 @@ void Server::parseCommand(std::string raw_msg, int index)
 	str_tokens = split(raw_msg);
 	if (str_tokens.empty())
 	{
-		std::cout << RED << "[ERROR]" << RESET << " Empty command received" << std::endl;
+		if (DEBUG || EVAL)
+			std::cout << RED << "[ERROR]" << RESET << " Empty command received" << std::endl;
 		return;
 	}
 	checkCommandHandlers(index);
@@ -230,7 +240,8 @@ void Server::checkCommandHandlers(int index)
 	}
 	else
 	{
-		std::cout << RED << "[ERROR]" << RESET << " Unknown command: " << command << std::endl;
+		if (DEBUG || EVAL)
+			std::cout << RED << "[ERROR]" << RESET << " Unknown command: " << command << std::endl;
 	}
 }
 
@@ -245,8 +256,9 @@ void Server::newClient()
 	if (client->get_bool_disconnected())
 	{
 		delete client;
-		std::cout << RED << "[ERROR]" << RESET << " New client connection failed - FD: " << client_fd << std::endl;
-		std::cout << RED << "[ERROR]" << RESET << " Removing client immediately after connection." << std::endl;
+		if (DEBUG || EVAL)
+			std::cout << RED << "[ERROR]" << RESET << " New client connection failed - FD: " << client_fd << std::endl;
+			std::cout << RED << "[ERROR]" << RESET << " Removing client immediately after connection." << std::endl;
 		return;
 	}
 	Clients.push_back(client);
@@ -257,7 +269,8 @@ void Server::exit_from_pass(int index)
 {
 	if (index < 0 || index >= static_cast<int>(Clients.size()))
 	{
-		std::cout << RED << "[ERROR]" << RESET << " Invalid client index: " << index << std::endl;
+		if (DEBUG || EVAL)
+			std::cout << RED << "[ERROR]" << RESET << " Invalid client index: " << index << std::endl;
 		return;
 	}
 	// Remove client from every channel it belongs to
@@ -272,11 +285,11 @@ void Server::exit_from_pass(int index)
 	ling.l_linger = 0;  // timeout 0 -> abortive close (RST)
 	if (setsockopt(fd, SOL_SOCKET, SO_LINGER, &ling, sizeof(ling)) == -1)
 	{
-		if (DEBUG)
+		if (DEBUG || EVAL)
 			std::cout << YELLOW << "[WARN]" << RESET << " setsockopt(SO_LINGER) failed for fd " << fd << ": " << std::strerror(errno) << std::endl;
 		if (shutdown(fd, SHUT_RDWR) == -1)
 		{
-			if (DEBUG)
+			if (DEBUG || EVAL)
 				std::cout << YELLOW << "[WARN]" << RESET << " shutdown() failed for fd " << fd << ": " << std::strerror(errno) << std::endl;
 		}
 	}
@@ -285,7 +298,7 @@ void Server::exit_from_pass(int index)
 	Clients[index]->set_bool_registered(false);
 	Clients[index]->set_bool_wellcome(false);
 	Clients[index]->set_bool_password_implemented(false);
-	if (DEBUG)
+	if (DEBUG || EVAL)
 		std::cout << YELLOW << "[INFO]" << RESET << " Client disconnected (abortive) - FD: " << fd << std::endl;
 }
 
@@ -294,7 +307,8 @@ void Server::removeClient(int index)
 {
 	if (index < 0 || index >= static_cast<int>(Clients.size()))
 	{
-		std::cout << RED << "[ERROR]" << RESET << " Invalid client index: " << index << std::endl;
+		if (DEBUG || EVAL)
+			std::cout << RED << "[ERROR]" << RESET << " Invalid client index: " << index << std::endl;
 		return;
 	}
 	// Remove client from every channel it belongs to
@@ -309,11 +323,11 @@ void Server::removeClient(int index)
 	ling.l_linger = 0;  // timeout 0 -> abortive close (RST)
 	if (setsockopt(fd, SOL_SOCKET, SO_LINGER, &ling, sizeof(ling)) == -1)
 	{
-		if (DEBUG)
+		if (DEBUG || EVAL)
 			std::cout << YELLOW << "[WARN]" << RESET << " setsockopt(SO_LINGER) failed for fd " << fd << ": " << std::strerror(errno) << std::endl;
 		if (shutdown(fd, SHUT_RDWR) == -1)
 		{
-			if (DEBUG)
+			if (DEBUG || EVAL)
 				std::cout << YELLOW << "[WARN]" << RESET << " shutdown() failed for fd " << fd << ": " << std::strerror(errno) << std::endl;
 		}
 	}
@@ -321,7 +335,10 @@ void Server::removeClient(int index)
 	if (static_cast<size_t>(index + 1) < pollFds.size())
 		pollFds.erase(pollFds.begin() + (index + 1));
 	else
-		std::cout << YELLOW << "[WARN]" << RESET << " Expected pollFds entry for client not found (index: " << index << ")" << std::endl;
+	{
+		if (DEBUG || EVAL)
+			std::cout << YELLOW << "[WARN]" << RESET << " Expected pollFds entry for client not found (index: " << index << ")" << std::endl;
+	}
 	// Reset registration-related flags before deleting the client
 	Clients[index]->set_bool_registered(false);
 	Clients[index]->set_bool_wellcome(false);
@@ -329,7 +346,7 @@ void Server::removeClient(int index)
 	clientBuffers.erase(fd);
 	delete Clients[index];
 	Clients.erase(Clients.begin() + index);
-	if (DEBUG)
+	if (DEBUG || EVAL)
 		std::cout << YELLOW << "[INFO]" << RESET << " Client disconnected (abortive) - FD: " << fd << std::endl;
 }
 bool Server::checkChannelExists(std::string channel_name)
@@ -358,7 +375,8 @@ void Server::broadcastToChannel(size_t channel_index, const std::string& message
 {
 	if (channel_index >= Channels.size())
 	{
-		std::cout << RED << "[ERROR]" << RESET << " Invalid channel index in broadcastToChannel: " << channel_index << std::endl;
+		if (DEBUG || EVAL)
+			std::cout << RED << "[ERROR]" << RESET << " Invalid channel index in broadcastToChannel: " << channel_index << std::endl;
 		return;
 	}
 	const std::map<Client*, bool>& users = Channels[channel_index].get_channel_users();
