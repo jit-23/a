@@ -1,4 +1,4 @@
-#include "Server.hpp"
+#include "../../include/Server.hpp"
 
 void Server::parseKick(std::vector<std::string> &tokens, int index)
 {

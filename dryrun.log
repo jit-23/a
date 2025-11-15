@@ -1,55 +1,5 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory '/home/madao-da/42/Rank_05/a'
-mkdir -p build/channel
-printf "\033[36m[CC]\033[0m %s\n" "src/channel/Channels.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/channel/Channels.cpp -o build/channel/Channels.o
-mkdir -p build/client
-printf "\033[36m[CC]\033[0m %s\n" "src/client/Client.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/client/Client.cpp -o build/client/Client.o
-mkdir -p build/commands
-printf "\033[36m[CC]\033[0m %s\n" "src/commands/invite.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/commands/invite.cpp -o build/commands/invite.o
-mkdir -p build/commands
-printf "\033[36m[CC]\033[0m %s\n" "src/commands/join.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/commands/join.cpp -o build/commands/join.o
-mkdir -p build/commands
-printf "\033[36m[CC]\033[0m %s\n" "src/commands/kick.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/commands/kick.cpp -o build/commands/kick.o
-mkdir -p build/commands
-printf "\033[36m[CC]\033[0m %s\n" "src/commands/mode.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/commands/mode.cpp -o build/commands/mode.o
-mkdir -p build/commands
-printf "\033[36m[CC]\033[0m %s\n" "src/commands/nick.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/commands/nick.cpp -o build/commands/nick.o
-mkdir -p build/commands
-printf "\033[36m[CC]\033[0m %s\n" "src/commands/part.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/commands/part.cpp -o build/commands/part.o
-mkdir -p build/commands
-printf "\033[36m[CC]\033[0m %s\n" "src/commands/pass.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/commands/pass.cpp -o build/commands/pass.o
-mkdir -p build/commands
-printf "\033[36m[CC]\033[0m %s\n" "src/commands/privmsg.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/commands/privmsg.cpp -o build/commands/privmsg.o
-mkdir -p build/commands
-printf "\033[36m[CC]\033[0m %s\n" "src/commands/quit.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/commands/quit.cpp -o build/commands/quit.o
-mkdir -p build/commands
-printf "\033[36m[CC]\033[0m %s\n" "src/commands/topic.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/commands/topic.cpp -o build/commands/topic.o
-mkdir -p build/commands
-printf "\033[36m[CC]\033[0m %s\n" "src/commands/user.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/commands/user.cpp -o build/commands/user.o
-mkdir -p build/modes
-printf "\033[36m[CC]\033[0m %s\n" "src/modes/modes.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/modes/modes.cpp -o build/modes/modes.o
-mkdir -p build/server
-printf "\033[36m[CC]\033[0m %s\n" "src/server/Server.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/server/Server.cpp -o build/server/Server.o
-mkdir -p build/server
-printf "\033[36m[CC]\033[0m %s\n" "src/server/main.cpp"
-c++ -Wall -Werror -Wextra -std=c++98 -MMD -MP -I include -c src/server/main.cpp -o build/server/main.o
-printf "\033[35m[LD]\033[0m Linking \033[1m%s\033[0m\n" "ircserv"
-c++ -Wall -Werror -Wextra -std=c++98 build/channel/Channels.o build/client/Client.o build/commands/invite.o build/commands/join.o build/commands/kick.o build/commands/mode.o build/commands/nick.o build/commands/part.o build/commands/pass.o build/commands/privmsg.o build/commands/quit.o build/commands/topic.o build/commands/user.o build/modes/modes.o build/server/Server.o build/server/main.o -o ircserv
-printf "\033[32m✓ Built \033[1m%s\033[0m\n" "ircserv"
+c++ -Wall -Wextra -Werror -std=c++98 src/channel/Channels.cpp src/client/Client.cpp src/commands/invite.cpp src/commands/join.cpp src/commands/kick.cpp src/commands/mode.cpp src/commands/nick.cpp src/commands/part.cpp src/commands/pass.cpp src/commands/privmsg.cpp src/commands/quit.cpp src/commands/topic.cpp src/commands/user.cpp src/modes/modes.cpp src/server/main.cpp src/server/Server.cpp -o ircserv
 make: Leaving directory '/home/madao-da/42/Rank_05/a'
  

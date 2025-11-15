@@ -1,5 +1,5 @@
-#include "Channels.hpp"
-#include "Server.hpp"
+#include "../../include/Channels.hpp"
+#include "../../include/Server.hpp"
 
 int Channel::handleKeyMode(std::string key)
 {
@@ -16,7 +16,7 @@ int Channel::handleKeyMode(std::string key)
 			std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Channel key too long, maximum is 30 characters (defined by us)" << std::endl;
 		}
 		return -2;
-	}
+	}	
 
 	for (size_t i = 0; i < key.size(); i++)
 	{

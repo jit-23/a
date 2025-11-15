@@ -1,4 +1,4 @@
-#include "Server.hpp"
+#include "../../include/Server.hpp"
 
 // GOOD EXAMPLE:
 // JOIN #channel1,#channel2 key1,key2

@@ -1,4 +1,4 @@
-#include "Server.hpp"
+#include "../../include/Server.hpp"
 
 //? Global server pointer for signal handler access
 Server* server = NULL;

@@ -1,4 +1,4 @@
-#include "Server.hpp"
+#include "../../include/Server.hpp"
 
 void Server::send_quit_msg(std::vector<std::string> &str_vtr, int index, int channel_index)
 {

@@ -1,4 +1,4 @@
-#include "Client.hpp"
+#include "../../include/Client.hpp"
 
 Client::Client(int _server_fd, int client_fd) : server_fd(_server_fd),fd(client_fd), bool_disconnected(false), bool_registered(false), bool_password_implemented(false), bool_wellcome(true)
 {

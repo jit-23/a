@@ -1,4 +1,4 @@
-#include "Server.hpp"
+#include "../../include/Server.hpp"
 
 void Server::handleTopic(std::vector<std::string> &tokens, int index)
 {

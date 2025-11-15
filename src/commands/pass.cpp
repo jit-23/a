@@ -1,4 +1,4 @@
-#include "Server.hpp"
+#include "../../include/Server.hpp"
 
 void Server::handlePass(std::vector<std::string> &str_vtr, int index)
 {

@@ -1,4 +1,4 @@
-#include "Server.hpp"
+#include "../../include/Server.hpp"
 
 // Example: PRIVMSG <destination> :<message>
 void Server::handlePrivmsg(std::vector<std::string> &str_vtr, int index)
