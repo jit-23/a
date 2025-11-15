@@ -37,15 +37,15 @@ class Channel
 		bool hasClient(Client* client) const;
 		bool isOperator(Client* client) const;
 
-		void handleKeyMode(std::string key);
-		void removeKey();
-		void handleTopicMode();
-		void removeTopicMode();
-		void handleInviteMode();
-		void removeInviteMode();
-		void handleOperatorMode(Client* client, bool give, std::vector<std::string> &tokens);
-		void handleLimitMode(int limit);
-		void removeLimitMode();
+	int handleKeyMode(std::string key);
+	int removeKey();
+	int handleTopicMode();
+	int removeTopicMode();
+	int handleInviteMode();
+	int removeInviteMode();
+	int handleOperatorMode(Client* client, bool give, std::vector<std::string> &tokens);
+	int handleLimitMode(int limit);
+	int removeLimitMode();
 
 		bool checkInvite(std::string nickname);
 		void addInvite(std::string nickname);

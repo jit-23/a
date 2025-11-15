@@ -108,9 +108,11 @@ void Server::handleMode(std::vector<std::string> &tokens, int index)
 							broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " +i\r\n");
 							break;
 						case 't':
-							Channels[i].handleTopicMode();
-							result_message += "+t ";
-							broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " +t\r\n");
+							if (Channels[i].handleTopicMode() == 0)
+							{
+								result_message += "+t ";
+								broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " +t\r\n");
+							}
 							break;
 						case 'k':
 							if (param_index >= tokens.size())
@@ -122,12 +124,14 @@ void Server::handleMode(std::vector<std::string> &tokens, int index)
 									std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Channel key not provided for +k" << std::endl;
 								return ;
 							}
-							Channels[i].handleKeyMode(tokens[param_index]);
-							result_message += "+k " + tokens[param_index] + " ";
-							broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " +k *\r\n");
-							key_msg = ":" + server_name + " MODE " + channel_name + " +k " + tokens[param_index] + "\r\n";
-							send(Clients[index]->get_fd(), key_msg.c_str(), key_msg.size(), 0);
-							param_index++;
+							if (Channels[i].handleKeyMode(tokens[param_index]) == 0)
+							{
+								result_message += "+k " + tokens[param_index] + " ";
+								broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " +k *\r\n");
+								key_msg = ":" + server_name + " MODE " + channel_name + " +k " + tokens[param_index] + "\r\n";
+								send(Clients[index]->get_fd(), key_msg.c_str(), key_msg.size(), 0);
+								param_index++;
+							}
 							break;
 						case 'l':
 							if (param_index >= tokens.size())
@@ -139,12 +143,15 @@ void Server::handleMode(std::vector<std::string> &tokens, int index)
 									std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " User limit not provided for +l" << std::endl;
 								return ;
 							}
-							Channels[i].handleLimitMode(std::atoi(tokens[param_index].c_str()));
-							result_message += "+l " + tokens[param_index] + " ";
-							broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " +l " + tokens[param_index] + "\r\n");
-							param_index++;
+							if (Channels[i].handleLimitMode(std::atoi(tokens[param_index].c_str())) == 0)
+							{
+								result_message += "+l " + tokens[param_index] + " ";
+								broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " +l " + tokens[param_index] + "\r\n");
+								param_index++;
+							}
 							break;
 						case 'o':
+						{
 							if (param_index >= tokens.size())
 							{
 								// CHANGE: send 461 instead of only logging
@@ -154,9 +161,14 @@ void Server::handleMode(std::vector<std::string> &tokens, int index)
 									std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Username not provided for +o" << std::endl;
 								return ;
 							}
-							Channels[i].handleOperatorMode(Clients[index], true, tokens); result_message += "+o " + tokens[param_index] + " ";
-							broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " +o " + tokens[param_index] + "\r\n");
-							param_index++;
+							int ret = Channels[i].handleOperatorMode(Clients[index], true, tokens);
+							if (ret == 0)
+							{
+								result_message += "+o " + tokens[param_index] + " ";
+								broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " +o " + tokens[param_index] + "\r\n");
+								param_index++;
+							}
+						}
 							break;
 						default:
 							// Unknown mode character
@@ -170,26 +182,35 @@ void Server::handleMode(std::vector<std::string> &tokens, int index)
 					switch (c)
 					{
 						case 'i':
-							Channels[i].removeInviteMode();
-							result_message += "-i ";
-							broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " -i\r\n");
+							if (Channels[i].removeInviteMode() == 0)
+							{
+								result_message += "-i ";
+								broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " -i\r\n");
+							}
 							break;
 						case 't':
-							Channels[i].removeTopicMode();
-							result_message += "-t ";
-							broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " -t\r\n");
+							if (Channels[i].removeTopicMode() == 0)
+							{
+								result_message += "-t ";
+								broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " -t\r\n");
+							}
 							break;
 						case 'k':
-							Channels[i].removeKey();
-							result_message += "-k ";
-							broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " -k\r\n");
+							if (Channels[i].removeKey() == 0)
+							{
+								result_message += "-k ";
+								broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " -k\r\n");
+							}
 							break;
 						case 'l':
-							Channels[i].removeLimitMode();
-							result_message += "-l ";
-							broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " -l\r\n");
+							if (Channels[i].removeLimitMode() == 0)
+							{
+								result_message += "-l ";
+								broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " -l\r\n");
+							}
 							break;
 						case 'o':
+						{
 							if (param_index >= tokens.size())
 							{
 								// CHANGE: send 461 instead of only logging
@@ -199,9 +220,14 @@ void Server::handleMode(std::vector<std::string> &tokens, int index)
 									std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Username not provided for -o" << std::endl;
 								return ;
 							}
-							Channels[i].handleOperatorMode(Clients[index], false, tokens); result_message += "-o " + tokens[param_index] + " ";
-							broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " -o " + tokens[param_index] + "\r\n");
-							param_index++;
+							int ret = Channels[i].handleOperatorMode(Clients[index], false, tokens);
+							if (ret == 0)
+							{
+								result_message += "-o " + tokens[param_index] + " ";
+								broadcastToChannel(i, ":" + Clients[index]->get_nickname() + "!" + Clients[index]->get_username() + "@localhost MODE " + channel_name + " -o " + tokens[param_index] + "\r\n");
+								param_index++;
+							}
+						}
 							break;
 						default:
 							// Unknown mode character

@@ -139,14 +139,14 @@ void Channel::addInvite(std::string nickname)
 
 // Example: MODE <channel> {[+|-]|o} <user>
 // tokens[0] = "MODE" ; tokens[1] = <channel> ; tokens[2] = {[+|-]|o} ; tokens[3] = <user>
-void Channel::handleOperatorMode(Client* client, bool give, std::vector<std::string> &tokens)
+int Channel::handleOperatorMode(Client* client, bool give, std::vector<std::string> &tokens)
 {
-	(void)client; // Unused parameter	
+	(void)client; // Unused parameter    
 	if (tokens.size() < 4)
 	{
 		if (DEBUG || EVAL)
 			std::cout << YELLOW << "[INFO] " << RESET << "Not enough parameters for MODE" << std::endl;
-		return;
+		return -1;
 	}
 
 	// Check channel name matches this channel
@@ -161,9 +161,9 @@ void Channel::handleOperatorMode(Client* client, bool give, std::vector<std::str
 	{
 		if (DEBUG || EVAL)
 			std::cout << YELLOW << "[INFO] " << RESET << "Channel name does not match" << std::endl;
-		return;
+		return -1;
 	}
-	
+    
 
 	std::string targetNick = tokens[3];
 	Client* target = 0;
@@ -182,7 +182,7 @@ void Channel::handleOperatorMode(Client* client, bool give, std::vector<std::str
 	{
 		if (DEBUG || EVAL)
 			std::cout << YELLOW << "[INFO] " << RESET << "User " << targetNick << " is not in channel " << name << std::endl;
-		return;
+		return -1;
 	}
 
 	// Give operator
@@ -191,6 +191,7 @@ void Channel::handleOperatorMode(Client* client, bool give, std::vector<std::str
 		channel_users[target] = true;
 		if (DEBUG || EVAL)
 			std::cout << GREEN << "[SUCCESS] " << RESET << "Client " << targetNick << " is now an operator in channel " << name << std::endl;
+		return 0;
 	}
 	// Remove operator
 	else
@@ -199,14 +200,17 @@ void Channel::handleOperatorMode(Client* client, bool give, std::vector<std::str
 		{
 			if (DEBUG || EVAL)
 				std::cout << YELLOW << "[INFO] " << RESET << "Client " << targetNick << " is not an operator in channel " << name << std::endl;
+			return -1;
 		}
 		else
 		{
 			channel_users[target] = false;
 			if (DEBUG || EVAL)
 				std::cout << GREEN << "[SUCCESS] " << RESET << "Operator removed from client " << targetNick << " in channel " << name << std::endl;
+			return 0;
 		}
 	}
+	return -1;
 }
 
 // Mode checking helper functions

@@ -1,20 +1,21 @@
 #include "Channels.hpp"
 #include "Server.hpp"
 
-void Channel::handleKeyMode(std::string key)
+int Channel::handleKeyMode(std::string key)
 {
 	if (key.empty())
 	{
 		if (DEBUG || EVAL)
 			std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Channel key cannot be empty" << std::endl;
-		return ;
+		return -1;
 	}
-	
 	if (key.size() > 30)
 	{
 		if (DEBUG || EVAL)
+		{
 			std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Channel key too long, maximum is 30 characters (defined by us)" << std::endl;
-		return ;
+		}
+		return -2;
 	}
 
 	for (size_t i = 0; i < key.size(); i++)
@@ -24,7 +25,7 @@ void Channel::handleKeyMode(std::string key)
 		{
 			if (DEBUG || EVAL)
 				std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " Channel key contains invalid characters" << std::endl;
-			return ;
+			return -3;
 		}
 	}
 
@@ -35,10 +36,16 @@ void Channel::handleKeyMode(std::string key)
 	{
 		std::cout << GREEN << "[SUCCESS]" << RESET << "Channel key for channel " << name << " set to " << channel_key << std::endl;
 	}
+	return 0;
 }
 
-void Channel::removeKey()
+int Channel::removeKey()
 {
+	if (!hasMode('k') && channel_key.empty())
+	{
+		// Nothing to remove
+		return -1;
+	}
 	removeMode('k');  // Use the string-based mode system
 	channel_key = "";
 
@@ -46,9 +53,10 @@ void Channel::removeKey()
 	{
 		std::cout << GREEN << "[SUCCESS]" << RESET << "Channel key for channel " << name << " removed" << std::endl;
 	}
+	return 0;
 }
 
-void Channel::handleTopicMode()
+int Channel::handleTopicMode()
 {
 	addMode('t');  // Use the string-based mode system
 
@@ -56,19 +64,25 @@ void Channel::handleTopicMode()
 	{
 		std::cout << GREEN << "[SUCCESS]" << RESET << "Channel topic for channel " << name << " set to be changed by operators only" << std::endl;
 	}
+	return 0;
 }
 
-void Channel::removeTopicMode()
+int Channel::removeTopicMode()
 {
+	if (!hasMode('t'))
+	{
+		return -1;
+	}
 	removeMode('t');  // Use the string-based mode system
 
 	if (DEBUG || EVAL)
 	{
 		std::cout << GREEN << "[SUCCESS]" << RESET << "Channel topic for channel " << name << " can now be changed by anyone" << std::endl;
 	}
+	return 0;
 }
 
-void Channel::handleInviteMode()
+int Channel::handleInviteMode()
 {
 	addMode('i');  // Use the string-based mode system
 
@@ -76,32 +90,38 @@ void Channel::handleInviteMode()
 	{
 		std::cout << GREEN << "[SUCCESS]" << RESET << "Invite only mode set for channel " << name << std::endl;
 	}
+	return 0;
 }
 
-void Channel::removeInviteMode()
+int Channel::removeInviteMode()
 {
+	if (!hasMode('i'))
+	{
+		return -1;
+	}
 	removeMode('i');  // Use the string-based mode system
 
 	if (DEBUG || EVAL)
 	{
 		std::cout << GREEN << "[SUCCESS]" << RESET << "Invite only mode removed for channel " << name << std::endl;
 	}
+	return 0;
 }
 
-void Channel::handleLimitMode(int limit)
+int Channel::handleLimitMode(int limit)
 {
 	if (limit <= 0)
 	{
 		if (DEBUG || EVAL)
 			std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " User limit must be positive" << std::endl;
-		return ;
+		return -1;
 	}
 
 	if (limit > 999999)
 	{
 		if (DEBUG || EVAL)
 			std::cout << RED << "[ERROR]" << PINK << "[MODE]" << RESET << " User limit too high, maximum is 999999" << std::endl;
-		return ;
+		return -2;
 	}
 
 	addMode('l');  // Use the string-based mode system
@@ -111,10 +131,15 @@ void Channel::handleLimitMode(int limit)
 	{
 		std::cout << GREEN << "[SUCCESS]" << RESET << "User limit set to " << limit << " for channel " << name << std::endl;
 	}
+	return 0;
 }
 
-void Channel::removeLimitMode()
+int Channel::removeLimitMode()
 {
+	if (!hasMode('l') && user_limit < 0)
+	{
+		return -1;
+	}
 	removeMode('l');  // Use the string-based mode system
 	user_limit = -1;  // -1 means no limit
 
@@ -122,4 +147,5 @@ void Channel::removeLimitMode()
 	{
 		std::cout << GREEN << "[SUCCESS]" << RESET << "User limit removed for channel " << name << std::endl;
 	}
+	return 0;
 }
